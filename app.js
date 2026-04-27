@@ -137,7 +137,7 @@ function chooseWinner(isRedraw) {
   if (entrants.length === 0) return;
 
   const winner = entrants[Math.floor(Math.random() * entrants.length)];
-  winnerEl.textContent = `${isRedraw ? 'New winner' : 'Winner'}: ${winner.displayName}`;
+  winnerEl.textContent = `${isRedraw ? 'Winner' : 'Winner'}: ${winner.displayName}`;
 }
 
 function handleIrcLine(line) {
