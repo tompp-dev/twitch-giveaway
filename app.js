@@ -22,6 +22,17 @@ let excludeMods = false;
 
 renderEntries();
 
+function getRandomIndex(max) {
+  const array = new Uint32Array(1);
+  const limit = Math.floor(0xffffffff / max) * max;
+
+  do {
+    crypto.getRandomValues(array);
+  } while (array[0] >= limit);
+
+  return array[0] % max;
+}
+
 redrawButton.addEventListener('click', () => {
   chooseWinner(true);
 });
@@ -136,7 +147,7 @@ function chooseWinner(isRedraw) {
   const entrants = [...entries.values()];
   if (entrants.length === 0) return;
 
-  const winner = entrants[Math.floor(Math.random() * entrants.length)];
+  const winner = entries[getRandomIndex(entries.length)];
   winnerEl.textContent = `${isRedraw ? 'Winner' : 'Winner'}: ${winner.displayName}`;
 }
 
