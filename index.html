@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Twitch chat giveaway</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="controls" aria-label="Giveaway setup">
+      <h1>Twitch chat giveaway</h1>
+      <p class="subtitle"></p>
+
+      <div class="form-grid">
+        <label>
+          Twitch channel
+          <input id="channelInput" type="text" placeholder="" autocomplete="off" spellcheck="false" />
+        </label>
+
+        <label>
+          Phrase
+          <input id="phraseInput" type="text" placeholder="" autocomplete="off" />
+        </label>
+
+        <button id="toggleButton" type="button">Start giveaway</button>
+      </div>
+
+      <fieldset class="eligibility-options" aria-label="Eligibility options">
+        <legend>Filters</legend>
+        <label class="checkbox-row">
+          <input id="excludeVipsCheckbox" type="checkbox" />
+          Exclude VIPs
+        </label>
+        <label class="checkbox-row">
+          <input id="excludeModsCheckbox" type="checkbox" />
+          Exclude moderators
+        </label>
+      </fieldset>
+
+      <div id="status" class="status idle" role="status"></div>
+      <div id="winner" class="winner" aria-live="polite"></div>
+      <button id="redrawButton" class="redraw" type="button" hidden>Choose another winner</button>
+    </section>
+
+    <section class="entries-panel" aria-label="Giveaway entries">
+      <div class="entries-header">
+        <h2>Entries</h2>
+        <span id="entryCount">0 chatters</span>
+      </div>
+      <div id="entriesList" class="entries-list" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
