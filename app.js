@@ -23,8 +23,13 @@ let excludeMods = false;
 renderEntries();
 
 function getRandomIndex(max) {
+  if (!Number.isInteger(max) || max <= 0) {
+    throw new Error("Cannot choose a winner from an empty entry list.");
+  }
+
   const array = new Uint32Array(1);
-  const limit = Math.floor(0xffffffff / max) * max;
+  const range = 0x100000000;
+  const limit = Math.floor(range / max) * max;
 
   do {
     crypto.getRandomValues(array);
@@ -138,17 +143,23 @@ function stopGiveaway() {
     return;
   }
 
-  setStatus(`Giveaway ended with ${entrants.length} entr${entrants.length === 1 ? 'y' : 'ies'}.`, 'idle');
-  chooseWinner(false);
+  statusEl.textContent = `Giveaway ended with ${entries.size} entries.`;
+  chooseWinner();
   redrawButton.hidden = false;
 }
 
-function chooseWinner(isRedraw) {
-  const entrants = [...entries.values()];
-  if (entrants.length === 0) return;
+function chooseWinner() {
+  const entryList = Array.from(entries);
 
-  const winner = entries[getRandomIndex(entries.length)];
-  winnerEl.textContent = `${isRedraw ? 'Winner' : 'Winner'}: ${winner.displayName}`;
+  if (entryList.length === 0) {
+    winnerEl.textContent = "No eligible entries.";
+    redrawButton.disabled = true;
+    return;
+  }
+
+  const winner = entryList[getRandomIndex(entryList.length)];
+  winnerEl.textContent = `Winner: ${winner}`;
+  redrawButton.disabled = false;
 }
 
 function handleIrcLine(line) {
