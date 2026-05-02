@@ -149,7 +149,7 @@ function stopGiveaway() {
 }
 
 function chooseWinner() {
-  const entryList = Array.from(entries);
+  const entryList = Array.from(entries.values());
 
   if (entryList.length === 0) {
     winnerEl.textContent = "No eligible entries.";
@@ -158,7 +158,13 @@ function chooseWinner() {
   }
 
   const winner = entryList[getRandomIndex(entryList.length)];
-  winnerEl.textContent = `Winner: ${winner}`;
+
+  const winnerName =
+    typeof winner === "string"
+      ? winner
+      : winner.username || winner.name || winner[0];
+
+  winnerEl.textContent = `Winner: ${winnerName}`;
   redrawButton.disabled = false;
 }
 
